@@ -14,9 +14,9 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                    # Stop any running container from the same image (optional cleanup)
-                    docker ps -q --filter "ancestor=devops-demo:v1" | xargs -r docker stop
-                    docker ps -aq --filter "ancestor=devops-demo:v1" | xargs -r docker rm
+                    # Stop ALL running containers (safe for this EC2 demo box)
+                    docker ps -q | xargs -r docker stop
+                    docker ps -aq | xargs -r docker rm
 
                     # Run the new container
                     docker run -d -p 80:3000 devops-demo:v1
